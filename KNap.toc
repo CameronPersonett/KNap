@@ -9,4 +9,6 @@ KNap.lua
 CosmicDebug.lua
 CosmicEvents.lua
 CosmicCore.lua
+CosmicMacros.lua
+CosmicDialogs.lua
 CosmicCmd.lua
