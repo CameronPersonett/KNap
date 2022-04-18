@@ -1,0 +1,16 @@
+Keywords:
+    KNAP_TNK(x)(_[P/R/O]), KNAP_HLR(x)(_[P/R/O]), KNAP_DPS(x)(_[P/R/O])
+    KNAP_BSS(x)
+    KNAP_KT, KNAP_FT, KNAP_OT(x)
+    KNAP_PR(x)(_[P/R/O]), KNAP_MG(x)(_[P/R/O]), KNAP_WL(x)(_[P/R/O])
+    KNAP_DR(x)(_[P/R/O]), KNAP_RG(x)(_[P/R/O]), KNAP_MK(x)(_[P/R/O]), KNAP_DH(x)(_[P/R/O])
+    KNAP_HT(x)(_[P/R/O]), KNAP_SH(x)(_[P/R/O])
+    KNAP_WR(x)(_[P/R/O]), KNAP_PL(x)(_[P/R/O]), KNAP_DK(x)(_[P/R/O])
+
+    "/Arms/Fury/Retribution/Frost/Unholy/"..
+    "Marksmanship/Beast Mastery/Survival/Enhancement/Elemental/"..
+    "Feral/Balance/Subtlety/Assassination/Outlaw/Windwalker/Havoc/"..
+    "Fire/Frost/Arcane/Shadow/Affliction/Demonology/Destruction/"
+
+    targetCriteria.class = ""
+    targetCriteria.spec = ""

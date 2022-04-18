@@ -1,0 +1,12 @@
+## Interface: 90200
+## Title: |cff93E9BECosmic Kidd Nappers
+## Version: 0.1
+## Author: Cameron Personett
+## SavedVariables: CKNdb
+## DefaultState: enabled
+
+KNap.lua
+CosmicDebug.lua
+CosmicEvents.lua
+CosmicCore.lua
+CosmicCmd.lua
