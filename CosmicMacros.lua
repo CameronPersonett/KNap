@@ -6,8 +6,12 @@ mac.Clean = {}
 mac.Modified = {}
 
 mac.Proc = {}
+mac.Proc.current = "NONE"
 mac.Proc.PvE = {}
 mac.Proc.PvP = {}
+
+-- The Sub table contains the keyword/substitution strings for each target denoted by a particular keyword
+mac.Sub
 
 mac.locked = false
 
@@ -40,8 +44,6 @@ end
 [[--return
     keywords:
         keyword:
-            start  - the starting position of the keyword in the macro body
-            finish - the ending position of the keyword in the macro body
             target - the boss/role/class/spec that the keyword refers to
             number - the index of the target if there are more than one of the same type
             group  - optional - the group identifier (party/raid/opponent)
@@ -52,10 +54,13 @@ function mac.GetKeywords(macro)
 
     local bodySub = macro.body
 
-    while(bodySub.find("KNAP[_](%a+%d*)[_](?P?R?O?)")) do
+    while(bodySub.find("KNAP[_](%a+)(%d*)[_]?(P?R?O?)")) do
         local keyword = {}
-        keyword.start, keyword.finish, keyword.contentType, keyword.target, keyword.number keyword.group = bodySub.find("KNAP[_](%a+)(%d*)[_]?(P?R?O?)")
-        keyword.raw = string.sub(bodySub, keyword.start, keyword.finish)
+        local start, finish = -1, -1
+
+        --keyword.start, keyword.finish, keyword.contentType, keyword.target, keyword.number keyword.group = bodySub.find("KNAP[_](%a+)(%d*)[_]?(P?R?O?)")
+        start, finish, keyword.target, keyword.number keyword.group = bodySub.find("KNAP[_](%a+)(%d*)[_]?(P?R?O?)")
+        keyword.raw = string.sub(bodySub, start, finish)
 
         table.insert(keywords, table.clone(keyword))
         bodySub = string.sub(bodySub, keyword.finish+1, bodySub:len())
@@ -229,15 +234,30 @@ function mac.GetTargetCriteriaByID(id)
     end return targetCriteria
 end
 
+function mac.IdentifyTargets()
+    if(mac.Proc.current == "PVP" or mac.Proc.current == "BOTH") then
+        for(raw, data in pairs(mac.Proc.PVP)) do
+            
+        end
+    end
+end
+
 function mac.BuildMacros()
-	local editedMacros = {}
-	local keywords = {}
+    mac.Modified = {}
 
 	for(macro in mac.Clean) do
         local modifiedMacro = table.clone(macro)
-        
-		keywords = ns.Core:GetKeywords(macro)
+		local keywords = mac.GetKeywords(macro)
+        local seenKeywords = {}
 
+        for(keyword in keywords) do
+            if(~seenKeywords[keyword]) then
+                modifiedMacro.body = string.gsub(modifiedMacro.body, keyword, mac.Sub[keyword])
+                seenKeywords[keyword] = true
+            end
+        end
+
+        table.insert(mac.Modified, modifiedMacro)
 	end
 end
 
