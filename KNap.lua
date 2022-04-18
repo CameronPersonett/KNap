@@ -34,7 +34,7 @@ ns.Cmd = {}
 SLASH_KNAP1 = "/knap"
 
 SlashCmdList["KNAP"] = function(str)
-	ns.Cmd:RunCommand(str)
+	ns.Cmd.RunCommand(str)
 end
 
 -- This is our addon's sleep function.

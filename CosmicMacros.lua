@@ -1,19 +1,17 @@
 local _, ns = ...
 
-ns.Macros.Clean = {}
-ns.Macros.Modified = {}
+local mac = ns.Macros
 
--- TODO: Build a procedure for PvE/PvP that will be used to 
--- request information from the user and edit the macros when 
--- the right events fire. This should be better than the current 
--- logic of building up the modified macro objects for injection.
-ns.Macros.Proc = {}
-ns.Macros.Proc.PvE = {}
-ns.Macros.Proc.PvP = {}
+mac.Clean = {}
+mac.Modified = {}
 
-ns.Macros.locked = false
+mac.Proc = {}
+mac.Proc.PvE = {}
+mac.Proc.PvP = {}
 
-function ns.Macros:Import()
+mac.locked = false
+
+function mac.Import()
 	for i=1, 54 do
 		local macroName, macroTex, macroBody, isLocal = GetMacroInfo(i)
 		
@@ -23,18 +21,18 @@ function ns.Macros:Import()
             texture = macroTex,
             body = macroBody,
             isLocal = isLocal -- Maybe not needed?
-        } table.insert(ns.Macros.Clean, curMacro)
+        } table.insert(mac.Clean, curMacro)
 	end
 end
 
-function ns.Macros:Filter()
-    for(i=table.getn(ns.Macros.Clean), 1, -1) do
-        local curMacro = ns.Macros.Clean[i]
+function mac.Filter()
+    for(i=table.getn(mac.Clean), 1, -1) do
+        local curMacro = mac.Clean[i]
 
-        curMacro.Keywords = ns.Macros:GetKeywords(curMacro)
+        curMacro.Keywords = mac.GetKeywords(curMacro)
 
         if(table.getn(curMacro.Keywords) == 0) then
-            table.remove(ns.Macros.Clean)
+            table.remove(mac.Clean)
         end
     end
 end
@@ -49,7 +47,7 @@ end
             group  - optional - the group identifier (party/raid/opponent)
         ...
 --]]
-function ns.Macros:GetKeywords(macro)
+function mac.GetKeywords(macro)
     local keywords = {}
 
     local bodySub = macro.body
@@ -64,48 +62,42 @@ function ns.Macros:GetKeywords(macro)
     end return keywords
 end
 
-function ns.Macros:BuildProfile()
-    for(macro in ns.Macros.Clean) do
+function mac.BuildProfile()
+    for(macro in mac.Clean) do
         local seenKeywords = {}
 
         for(keyword in macro.Keywords) do
-            -- No longer necessary?
-            if(~seenKeywords[keyword]) then
-                table.insert(modifiedMacro.targetCriteria, ns.Macros:GetTargetCriteriaByID(keyword.target))
-                table.insert(seenKeywords, keyword)
-            end
-
-            if(string.sub(modifiedMacro.name, 1, 3) == "PVP" & ~ns.Macros.Proc.PVP[keyword.raw]) then
-                ns.Macros.Proc.PVP[keyword.raw] = {
+            if(string.sub(modifiedMacro.name, 1, 3) == "PVP" and ~mac.Proc.PVP[keyword.raw]) then
+                mac.Proc.PVP[keyword.raw] = {
                     keyword = keyword,
-                    targetCriteria = modifiedMacro.targetCriteria
+                    targetCriteria = mac.GetTargetCriteriaByID(keyword.target)
                 }
-            elseif(string.sub(modifiedMacro.name, 1, 3) == "PVE" & ~ns.Macros.Proc.PVE[keyword.raw])) then
-                ns.Macros.Proc.PVE[keyword.raw] = {
+            elseif(string.sub(modifiedMacro.name, 1, 3) == "PVE" and ~mac.Proc.PVE[keyword.raw])) then
+                mac.Proc.PVE[keyword.raw] = {
                     keyword = keyword,
-                    targetCriteria = modifiedMacro.targetCriteria
+                    targetCriteria = mac.GetTargetCriteriaByID(keyword.target)
                 }
             else
-                if(~ns.Macros.Proc.PVP[keyword.raw]) then
-                    ns.Macros.Proc.PVP[keyword.raw] = {
+                if(~mac.Proc.PVP[keyword.raw]) then
+                    mac.Proc.PVP[keyword.raw] = {
                         keyword = keyword,
-                        targetCriteria = modifiedMacro.targetCriteria
+                        targetCriteria = mac.GetTargetCriteriaByID(keyword.target)
                     }
-                elseif(~ns.Macros.Proc.PVE[keyword.raw]) then
-                    ns.Macros.Proc.PVE[keyword.raw] = {
+                elseif(~mac.Proc.PVE[keyword.raw]) then
+                    mac.Proc.PVE[keyword.raw] = {
                         keyword = keyword,
-                        targetCriteria = modifiedMacro.targetCriteria
+                        targetCriteria = mac.GetTargetCriteriaByID(keyword.target)
                     }
                 end
             end
         end
 
         -- No longer necessary?
-        table.insert(ns.Macros.Modified, modifiedMacro)
+        table.insert(mac.Modified, modifiedMacro)
     end
 end
 
-function ns.Macros:GetTargetCriteriaByID(id)
+function mac.GetTargetCriteriaByID(id)
     local targetCriteria = {
         enemy = "",
         class = "",
@@ -237,11 +229,11 @@ function ns.Macros:GetTargetCriteriaByID(id)
     end return targetCriteria
 end
 
-function ns.Macros:BuildMacros()
+function mac.BuildMacros()
 	local editedMacros = {}
 	local keywords = {}
 
-	for(macro in ns.Macros.Clean) do
+	for(macro in mac.Clean) do
         local modifiedMacro = table.clone(macro)
         
 		keywords = ns.Core:GetKeywords(macro)
@@ -249,26 +241,20 @@ function ns.Macros:BuildMacros()
 	end
 end
 
-function ns.Macros:Inject()
-    ns.Macros:EditMacros(ns.Macros.Modified)
+function mac.Inject()
+    mac.EditMacros(mac.Modified)
 end
 
-function ns.Macros:Restore()
-    ns:Macros:EditMacros(ns.Macros.Clean)
+function mac.Restore()
+    mac.EditMacros(mac.Clean)
 end
 
-function ns.Macros:EditMacros(macros)
-    ns.Macros.locked = true
+function mac.EditMacros(macros)
+    mac.locked = true
 
     for(macro in macros) do
         EditMacro(macro.number, macro.name, macro.icon, macro.body, macro.isLocal, 1)
     end
 
-    ns.Macros.locked = false
-end
-
-function ns.Macros:TranslateKeywords(keywords)
-	for(keyword in keywords) then
-		if(keyword == "KNAP_TNK")
-	end
+    mac.locked = false
 end

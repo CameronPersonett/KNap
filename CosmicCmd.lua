@@ -1,5 +1,7 @@
 local _, ns = ...
 
+local cmd = ns.Cmd
+
 local ParseCommand = function(line)
 	local cmd = {}
 	
@@ -17,17 +19,17 @@ local ParseCommand = function(line)
     return cmd
 end
 
--- For some reason the first parameter is always this object? Don't know why
-function ns.Cmd.RunCommand(self, line)
+-- For some reason the first parameter is always the self object? Don't know why
+function cmd.RunCommand(line)
 	if(line == "") then
-		ns.Cmd:Default()
+		cmd.Default()
 	else
 		local cmd = ParseCommand(line)
 		print(ns.Debug:TableToText(cmd))
-		ns.Cmd[cmd.name](cmd.args)
+		cmd[cmd.name](cmd.args)
 	end
 end
 
-function ns.Cmd:Default()
+function cmd.Default()
 	print("YO")
 end

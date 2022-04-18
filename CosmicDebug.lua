@@ -1,9 +1,9 @@
---KNap.Debug = {}
 local _, ns = ...
-ns.Debug = {}
+
+local dbg = ns.Debug
 
 -- KethoEditBox - change this?
-function ns.Debug:ShowText(text) --KNap.Debug:ShowText(text)
+function dbg.ShowText(text)
     if not KethoEditBox then
         local f = CreateFrame("Frame", "KethoEditBox", UIParent, "DialogBoxFrame")
         f:SetPoint("CENTER")
@@ -75,7 +75,7 @@ function ns.Debug:ShowText(text) --KNap.Debug:ShowText(text)
     KethoEditBox:Show()
 end
 
-function ns.Debug:TableToText(tableIn, level) --KNap.Debug:TableToText(tableIn, level)
+function dbg.TableToText(tableIn, level)
 	local text = ""
 	
 	if(level == nil) then
@@ -89,7 +89,7 @@ function ns.Debug:TableToText(tableIn, level) --KNap.Debug:TableToText(tableIn, 
 		end
 		
 		if (type(v) == "table") then
-			text = text..k.."\n"..ns.Debug:TableToText(v, level+1)
+			text = text..k.."\n"..dbg.TableToText(v, level+1)
 		else
 			text = text..k..": "..tostring(v).."\n"
 		end
