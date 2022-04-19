@@ -27,21 +27,22 @@ function cor.WaitForArenaJoinCutoff()
 end
 
 -- TODO: Condense these blocks of reused code?
-function cor.PollGroup(groupType, targetData)
+function cor.PollGroup(groupType, targetCriteria)
     local groupMatches = {}
 
     if(groupType == "PARTY") then
 		for(i = 1, GetNumGroupMembers()) do
 			local _, specName, _, _, _, _, className = GetSpecializationInfoByID(GetInspectSpecialization("party"..i))
 
-            local criteria = targetData.targetCriteria
+            local classStart, _ = string.find("/"..targetCriteria.class.."/", className)
+            local specStart, _ = string.find("/"..targetCriteria.spec.."/", specName)
             local success = true
 
-            if(criteria.class and criteria.class ~= className) then
+            if(targetCriteria.class and ~classStart) then
                 success = false
             end
 
-            if(criteria.spec and criteria.spec ~= specName) then
+            if(targetCriteria.spec and ~specStart) then
                 success = false
             end
 
@@ -55,14 +56,15 @@ function cor.PollGroup(groupType, targetData)
         for(i=1, GetNumArenaOpponentSpecs()) do
 			local _, specName, _, _, _, _, className = GetSpecializationInfoByID(GetArenaOpponentSpec(i))
 			
-			local criteria = targetData.targetCriteria
+			local classStart, _ = string.find("/"..targetCriteria.class.."/", className)
+            local specStart, _ = string.find("/"..targetCriteria.spec.."/", specName)
             local success = true
 
-            if(criteria.class and criteria.class ~= className) then
+            if(targetCriteria.class and ~classStart) then
                 success = false
             end
 
-            if(criteria.spec and criteria.spec ~= specName) then
+            if(targetCriteria.spec and ~specStart) then
                 success = false
             end
 

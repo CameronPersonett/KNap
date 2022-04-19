@@ -10,8 +10,13 @@ mac.Proc.current = "NONE"
 mac.Proc.PvE = {}
 mac.Proc.PvP = {}
 
--- The Sub table contains the keyword/substitution strings for each target denoted by a particular keyword
-mac.Sub
+-- The MissingTargets table contains the raw/data key-value pairs for targets
+-- that cannot be automatically identified
+mac.MissingTargets = {}
+
+-- The Sub table contains the keyword/substitution strings for each target
+-- denoted by a particular keyword
+mac.Sub = {}
 
 mac.locked = false
 
@@ -46,7 +51,7 @@ end
         keyword:
             target - the boss/role/class/spec that the keyword refers to
             number - the index of the target if there are more than one of the same type
-            group  - optional - the group identifier (party/raid/opponent)
+            group  - the group identifier (party/raid/opponent)
         ...
 --]]
 function mac.GetKeywords(macro)
@@ -67,27 +72,28 @@ function mac.GetKeywords(macro)
     end return keywords
 end
 
-function mac.BuildProfile()
+function mac.BuildProcs()
     for(macro in mac.Clean) do
-        local seenKeywords = {}
-
         for(keyword in macro.Keywords) do
             if(string.sub(modifiedMacro.name, 1, 3) == "PVP" and ~mac.Proc.PVP[keyword.raw]) then
                 mac.Proc.PVP[keyword.raw] = {
                     keyword = keyword,
                     targetCriteria = mac.GetTargetCriteriaByID(keyword.target)
                 }
+
             elseif(string.sub(modifiedMacro.name, 1, 3) == "PVE" and ~mac.Proc.PVE[keyword.raw])) then
                 mac.Proc.PVE[keyword.raw] = {
                     keyword = keyword,
                     targetCriteria = mac.GetTargetCriteriaByID(keyword.target)
                 }
+
             else
                 if(~mac.Proc.PVP[keyword.raw]) then
                     mac.Proc.PVP[keyword.raw] = {
                         keyword = keyword,
                         targetCriteria = mac.GetTargetCriteriaByID(keyword.target)
                     }
+
                 elseif(~mac.Proc.PVE[keyword.raw]) then
                     mac.Proc.PVE[keyword.raw] = {
                         keyword = keyword,
@@ -96,9 +102,6 @@ function mac.BuildProfile()
                 end
             end
         end
-
-        -- No longer necessary?
-        table.insert(mac.Modified, modifiedMacro)
     end
 end
 
@@ -234,10 +237,24 @@ function mac.GetTargetCriteriaByID(id)
     end return targetCriteria
 end
 
+-- TODO: Condense these reused blocks of code?
 function mac.IdentifyTargets()
-    if(mac.Proc.current == "PVP" or mac.Proc.current == "BOTH") then
+    mac.MissingTargets = {}
+
+    if(mac.Proc.current == "PVP") then
         for(raw, data in pairs(mac.Proc.PVP)) do
-            
+            local matches = ns.Core.PollGroup(data.keyword.group, data.targetCriteria)
+
+            if(table.getn(matches) == 1) then
+                mac.Sub[raw] = matches[1]
+
+            elseif(table.getn(matches) > 1) then
+                mac.MissingTargets[raw] = {
+                    keyword = data.keyword,
+                    criteria = data.targetCriteria,
+                    matches = matches
+                }
+            end
         end
     end
 end

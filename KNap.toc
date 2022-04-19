@@ -11,4 +11,5 @@ CosmicEvents.lua
 CosmicCore.lua
 CosmicMacros.lua
 CosmicDialogs.lua
+CosmicFrames.lua
 CosmicCmd.lua

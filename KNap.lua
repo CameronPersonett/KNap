@@ -22,9 +22,16 @@ ns.Core = {}
 -- used in the macro-specific core logic for the addon.
 ns.Macros = {}
 
--- The Dialogs table is to store the static dialogs used by the addon to specify
--- targets when there are multiple options.
-ns.Dialogs = {}
+-- The UI table is used to store the addon's static dialogs and frames.
+ns.UI = {}
+
+-- The Dialogs table is used to store the static dialogs used by the addon to get
+-- simple information from the user (yes/no/maybe).
+ns.UI.Dialogs = {}
+
+-- The Frames table is used to store any frame data/logic used to configure the
+-- addon or request more complex data from the user.
+ns.UI.Frames = {}
 
 -- The Cmd table is used to store the functions associated with interpreting
 -- and responding to slash commands. Everything the addon's frames can achieve
