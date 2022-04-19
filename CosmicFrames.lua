@@ -66,8 +66,8 @@ function frm.ChooseTarget(targetData)
     text = text .. "would you prefer?"
     KnapTargetChoiceFrame.text:SetText(text)
 
-    -- TODO: Set size based on how many targetData.matches there are (space
-    -- buttons would take up).
+    -- TODO: Set size based on how many targetData.matches there are (in terms
+    -- of how much space the buttons would take up).
 
     for(i=1, table.getn(targetData.matches)) do
         local b = _G["KnapTargetChoiceButton" .. i]
