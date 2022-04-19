@@ -30,6 +30,7 @@ end
 function cor.PollGroup(groupType, targetCriteria)
     local groupMatches = {}
 
+    -- TODO: GET NAMES OF PLAYERS INSTEAD OF party1, ...
     if(groupType == "PARTY") then
 		for(i = 1, GetNumGroupMembers()) do
 			local _, specName, _, _, _, _, className = GetSpecializationInfoByID(GetInspectSpecialization("party"..i))
@@ -74,7 +75,7 @@ function cor.PollGroup(groupType, targetCriteria)
 		end
 
     else if(groupType == "RAID") then
-		-- TODO: Complete raid group polling.
+		-- TODO: Complete raid group polling. GET NAMES OF PLAYERS INSTEAD OF RAID1, ...
 
     else
 		print("Invalid group type. @CosmicCore.PollGroup()")

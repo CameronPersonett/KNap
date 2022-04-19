@@ -2,14 +2,14 @@ local _, ns = ...
 
 local dlg = ns.Dialogs
 
-function dlg.ChooseClassTarget(className, target1, target2, target3)
+function dlg.ChooseClassTarget(className, targets)
 	local classNameText = "|c"..RAID_CLASS_COLORS[string.upper(className)].colorStr..className.."|r"
 	
 	StaticPopupDialogs["KNAP_CHOOSE_CLASS_TARGET"] = {
 		text = "Which "..classNameText.." should be assigned?",
-		button1 = target1,
-		button2 = target2,
-		button3 = target3,
+		button1 = targets[1],
+		button2 = targets[2],
+		button3 = target[3],
 		OnAccept = function()
 			ChosenTarget = target1
 		end,

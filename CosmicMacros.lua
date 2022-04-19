@@ -152,85 +152,113 @@ function mac.GetTargetCriteriaByID(id)
         targetCriteria.class = "Warlock"
 
     elseif(id == "AM") then
-        targetCriteria.spec = "Arms"
+        targetCriteria.class = "Warrior"
+        targetCriteria.spec = "/Arms/"
     elseif(id == "FR") then
-        targetCriteria.spec = "Fury"
+        targetCriteria.class = "Warrior"
+        targetCriteria.spec = "/Fury/"
     elseif(id == "WP") then
         targetCriteria.class = "Warrior"
-        targetCriteria.spec = "Protection"
+        targetCriteria.spec = "/Protection/"
     elseif(id == "RN") then
-        targetCriteria.spec = "Retribution"
+        targetCriteria.class = "Paladin"
+        targetCriteria.spec = "/Retribution/"
     elseif(id == "NH") then
         targetCriteria.class = "Paladin"
-        targetCriteria.spec = "Holy"
+        targetCriteria.spec = "/Holy/"
     elseif(id == "PP") then
         targetCriteria.class = "Paladin"
-        targetCriteria.spec = "Protection"
+        targetCriteria.spec = "/Protection/"
     elseif(id == "DF") then
         targetCriteria.class = "Death Knight"
-        targetCriteria.spec = "Frost"
+        targetCriteria.spec = "/Frost/"
     elseif(id == "UL") then
-        targetCriteria.spec = "Unholy"
+        targetCriteria.class = "Death Knight"
+        targetCriteria.spec = "/Unholy/"
     elseif(id == "BD") then
-        targetCriteria.spec = "Blood"
+        targetCriteria.class = "Death Knight"
+        targetCriteria.spec = "/Blood/"
     elseif(id == "MP") then
-        targetCriteria.spec = "Marksmanship"
+        targetCriteria.class = "Hunter"
+        targetCriteria.spec = "/Marksmanship/"
     elseif(id == "BM") then
-        targetCriteria.spec = "Beast Mastery"
+        targetCriteria.class = "Hunter"
+        targetCriteria.spec = "/Beast Mastery/"
     elseif(id == "SL") then
-        targetCriteria.spec = "Survival"
+        targetCriteria.class = "Hunter"
+        targetCriteria.spec = "/Survival/"
     elseif(id == "ET") then
-        targetCriteria.spec = "Enhancement"
+        targetCriteria.class = "Shaman"
+        targetCriteria.spec = "/Enhancement/"
     elseif(id == "EL") then
-        targetCriteria.spec = "Elemental"
+        targetCriteria.class = "Shaman"
+        targetCriteria.spec = "/Elemental/"
     elseif(id == "SR") then
         targetCriteria.class = "Shaman"
-        targetCriteria.spec = "Restoration"
+        targetCriteria.spec = "/Restoration/"
     elseif(id == "FL") then
-        targetCriteria.spec = "Feral"
+        targetCriteria.class = "Druid"
+        targetCriteria.spec = "/Feral/"
     elseif(id == "BC") then
-        targetCriteria.spec = "Balance"
+        targetCriteria.class = "Druid"
+        targetCriteria.spec = "/Balance/"
     elseif(id == "DR") then
         targetCriteria.class = "Druid"
-        targetCriteria.spec = "Restoration"
+        targetCriteria.spec = "/Restoration/"
     elseif(id == "GN") then
-        targetCriteria.spec = "Guardian"
+        targetCriteria.class = "Druid"
+        targetCriteria.spec = "/Guardian/"
     elseif(id == "ST") then
-        targetCriteria.spec = "Subtlety"
+        targetCriteria.class = "Rogue"
+        targetCriteria.spec = "/Subtlety/"
     elseif(id == "AS") then
-        targetCriteria.spec = "Assassination"
+        targetCriteria.class = "Rogue"
+        targetCriteria.spec = "/Assassination/"
     elseif(id == "OW") then
-        targetCriteria.spec = "Outlaw"
+        targetCriteria.class = "Rogue"
+        targetCriteria.spec = "/Outlaw/"
     elseif(id == "WI") then
-        targetCriteria.spec = "Windwalker"
+        targetCriteria.class = "Monk"
+        targetCriteria.spec = "/Windwalker/"
     elseif(id == "MR") then
-        targetCriteria.spec = "Mistweaver"
+        targetCriteria.class = "Monk"
+        targetCriteria.spec = "/Mistweaver/"
     elseif(id == "BR") then
-        targetCriteria.spec = "Brewmaster"
+        targetCriteria.class = "Monk"
+        targetCriteria.spec = "/Brewmaster/"
     elseif(id == "HC") then
-        targetCriteria.spec = "Havoc"
+        targetCriteria.class = "Demon Hunter"
+        targetCriteria.spec = "/Havoc/"
     elseif(id == "VC") then
-        targetCriteria.spec = "Vengeance"
+        targetCriteria.class = "Demon Hunter"
+        targetCriteria.spec = "/Vengeance/"
     elseif(id == "FI") then
-        targetCriteria.spec = "Fire"
+        targetCriteria.class = "Mage"
+        targetCriteria.spec = "/Fire/"
     elseif(id == "MF") then
         targetCriteria.class = "Mage"
-        targetCriteria.spec = "Frost"
+        targetCriteria.spec = "/Frost/"
     elseif(id == "AR") then
-        targetCriteria.spec = "Arcane"
+        targetCriteria.class = "Mage"
+        targetCriteria.spec = "/Arcane/"
     elseif(id == "SW") then
-        targetCriteria.spec = "Shadow"
+        targetCriteria.class = "Priest"
+        targetCriteria.spec = "/Shadow/"
     elseif(id == "DI") then
-        targetCriteria.spec = "Discipline"
+        targetCriteria.class = "Priest"
+        targetCriteria.spec = "/Discipline/"
     elseif(id == "TH") then
         targetCriteria.class = "Priest"
-        targetCriteria.spec = "Holy"
+        targetCriteria.spec = "/Holy/"
     elseif(id == "AF") then
-        targetCriteria.spec = "Affliction"
+        targetCriteria.class = "Warlock"
+        targetCriteria.spec = "/Affliction/"
     elseif(id == "DG") then
-        targetCriteria.spec = "Demonology"
+        targetCriteria.class = "Warlock"
+        targetCriteria.spec = "/Demonology/"
     elseif(id == "DN") then
-        targetCriteria.spec = "Destruction"
+        targetCriteria.class = "Warlock"
+        targetCriteria.spec = "/Destruction/"
 
     else
         return "Target criteria could not be identified."
@@ -256,6 +284,32 @@ function mac.IdentifyTargets()
                 }
             end
         end
+
+    elseif(mac.Proc.current == "PVE") then
+        for(raw, data in pairs(mac.Proc.PVE)) do
+            local matches = ns.Core.PollGroup(data.keyword.group, data.targetCriteria)
+
+            if(table.getn(matches) == 1) then
+                mac.Sub[raw] = matches[1]
+
+            elseif(table.getn(matches) > 1) then
+                table.insert(mac.MissingTargets, {
+                    raw = raw,
+                    keyword = data.keyword,
+                    criteria = data.targetCriteria,
+                    matches = matches
+                })
+            end
+        end
+    end
+
+    while(table.getn(mac.MissingTargets) > 0) do
+        local t = mac.MissingTargets[table.getn(mac.MissingTargets)]
+
+        ns.UI.Frames.ChooseTarget(t)
+        ns.UI.Frames.WaitForTargetChoice()
+
+        table.remove(t)
     end
 end
 
