@@ -2,6 +2,39 @@ local _, ns = ...
 
 local cor = ns.Core
 
+local waitTable = {};
+local waitFrame = nil;
+
+function KNAP_wait(delay, func, ...)
+    if(type(delay)~="number" or type(func)~="function") then
+        return false;
+    end
+
+    if(waitFrame == nil) then
+        waitFrame = CreateFrame("Frame","WaitFrame", UIParent);
+        waitFrame:SetScript("onUpdate", function (self,elapse)
+            local count = #waitTable;
+            local i = 1;
+            while(i<=count) do
+                local waitRecord = tremove(waitTable,i);
+                local d = tremove(waitRecord,1);
+                local f = tremove(waitRecord,1);
+                local p = tremove(waitRecord,1);
+                if(d>elapse) then
+                    tinsert(waitTable,i,{d-elapse,f,p});
+                    i = i + 1;
+                else
+                    count = count - 1;
+                    f(unpack(p));
+                end
+            end
+        end);
+    end
+
+    tinsert(waitTable,{delay,func,{...}});
+    return true;
+end
+
 function cor.WaitForArenaJoinCutoff()
 	local status = {}
 	status.success = false
@@ -23,7 +56,9 @@ function cor.WaitForArenaJoinCutoff()
 		else
 			KNAP_wait(1)
 		end
-	end return status
+	end 
+    
+    return status
 end
 
 -- TODO: Condense these blocks of reused code?
@@ -32,40 +67,40 @@ function cor.PollGroup(groupType, targetCriteria)
 
     -- TODO: GET NAMES OF PLAYERS INSTEAD OF party1, ...
     if(groupType == "PARTY") then
-		for(i = 1, GetNumGroupMembers()) do
+		for i = 1, GetNumGroupMembers() do
 			local _, specName, _, _, _, _, className = GetSpecializationInfoByID(GetInspectSpecialization("party"..i))
 
             local classStart, _ = string.find("/"..targetCriteria.class.."/", className)
             local specStart, _ = string.find("/"..targetCriteria.spec.."/", specName)
             local success = true
 
-            if(targetCriteria.class and ~classStart) then
+            if(targetCriteria.class ~= "" and classStart < 1) then
                 success = false
             end
 
-            if(targetCriteria.spec and ~specStart) then
+            if(targetCriteria.spec ~= "" and specStart < 1) then
                 success = false
             end
 
             if(success) then
-                table.insert(groupMatches, "party"..i)
+                table.insert(groupMatches, "party" .. i)
             end
         end
 
-	-- TODO: Change this group type to ARENA?
     elseif(groupType == "OPPONENT") then
-        for(i=1, GetNumArenaOpponentSpecs()) do
+        -- TODO: Change this group type to ARENA?
+        for i = 1, GetNumArenaOpponentSpecs() do
 			local _, specName, _, _, _, _, className = GetSpecializationInfoByID(GetArenaOpponentSpec(i))
 			
 			local classStart, _ = string.find("/"..targetCriteria.class.."/", className)
             local specStart, _ = string.find("/"..targetCriteria.spec.."/", specName)
             local success = true
 
-            if(targetCriteria.class and ~classStart) then
+            if(targetCriteria.class ~= "" and classStart < 1) then
                 success = false
             end
 
-            if(targetCriteria.spec and ~specStart) then
+            if(targetCriteria.spec ~= "" and specStart < 1) then
                 success = false
             end
 
@@ -74,11 +109,10 @@ function cor.PollGroup(groupType, targetCriteria)
             end
 		end
 
-    else if(groupType == "RAID") then
+    elseif(groupType == "RAID") then
 		-- TODO: Complete raid group polling. GET NAMES OF PLAYERS INSTEAD OF RAID1, ...
-
-    else
-		print("Invalid group type. @CosmicCore.PollGroup()")
-		return nil
-    end return groupMatches
+        print("Feature not implemented yet.")
+    end
+    
+    return groupMatches
 end

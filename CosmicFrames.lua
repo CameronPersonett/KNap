@@ -25,7 +25,7 @@ local function initializeTargetChoiceFrame()
         end
     end) f:SetScript("OnMouseUp", f.StopMovingOrSizing)
 
-    for(i=1, 40) do
+    for i = 1, 40 do
         local b = CreateFrame("Button", "KnapTargetChoiceButton"..i, KnapTargetChoiceFrame)
         b:SetText("")
         b:SetScript("OnClick", nil)
@@ -36,7 +36,7 @@ end
 function frm.ChooseTarget(targetData)
     frm.isChoosingTarget = true
 
-    if(~KnapTargetChoiceFrame) then
+    if(not KnapTargetChoiceFrame) then
         initializeTargetChoiceFrame()
     end
 
@@ -69,7 +69,7 @@ function frm.ChooseTarget(targetData)
     -- TODO: Set size based on how many targetData.matches there are (in terms
     -- of how much space the buttons would take up).
 
-    for(i=1, table.getn(targetData.matches)) do
+    for i = 1, table.getn(targetData.matches) do
         local b = _G["KnapTargetChoiceButton" .. i]
 
         b:SetText(matches[i])

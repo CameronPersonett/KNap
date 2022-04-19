@@ -6,7 +6,7 @@ local cosmicParent = CreateFrame("Frame")
 cosmicParent:RegisterEvent("PLAYER_LOGIN")
 cosmicParent:RegisterEvent("PLAYER_ENTERING_WORLD")
 cosmicParent:RegisterEvent("UPDATE_MACROS")
-cosmicParent:RegisterEvent("PARTY_MEMBERS_CHANGED")
+--cosmicParent:RegisterEvent("PARTY_MEMBERS_CHANGED") -- This event doesn't exist?
 cosmicParent:RegisterEvent("ARENA_OPPONENT_UPDATE")
 
 local cosmicParent_OnEvent = function(self, event, ...)

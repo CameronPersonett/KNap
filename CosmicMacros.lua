@@ -35,7 +35,7 @@ function mac.Import()
 end
 
 function mac.Filter()
-    for(i=table.getn(mac.Clean), 1, -1) do
+    for i = table.getn(mac.Clean), 1, -1 do
         local curMacro = mac.Clean[i]
 
         curMacro.Keywords = mac.GetKeywords(curMacro)
@@ -46,55 +46,60 @@ function mac.Filter()
     end
 end
 
-[[--return
-    keywords:
-        keyword:
-            target - the boss/role/class/spec that the keyword refers to
-            number - the index of the target if there are more than one of the same type
-            group  - the group identifier (party/raid/opponent)
-        ...
---]]
+--  return keywords:
+--    keyword:
+--      target - the boss/role/class/spec that the keyword refers to
+--      number - the index of the target if there are more than one of the same type
+--      group  - the group identifier (party/raid/opponent)
+--    ...
 function mac.GetKeywords(macro)
     local keywords = {}
 
     local bodySub = macro.body
 
     while(bodySub.find("KNAP[_](%a+)(%d*)[_]?(P?R?O?)")) do
-        local keyword = {}
-        local start, finish = -1, -1
+        local start, finish, target, number, group = nil, nil, nil, nil, nil
 
         --keyword.start, keyword.finish, keyword.contentType, keyword.target, keyword.number keyword.group = bodySub.find("KNAP[_](%a+)(%d*)[_]?(P?R?O?)")
-        start, finish, keyword.target, keyword.number keyword.group = bodySub.find("KNAP[_](%a+)(%d*)[_]?(P?R?O?)")
-        keyword.raw = string.sub(bodySub, start, finish)
+        start, finish, target, number, group = bodySub.find("KNAP[_](%a+)(%d*)[_]?(P?R?O?)")
 
-        table.insert(keywords, table.clone(keyword))
+        local keyword = {
+            raw = string.sub(bodySub, start, finish),
+            start = start,
+            finish = finish,
+            target = target,
+            number = number,
+            group = group
+        }
+
+        table.insert(keywords, keyword)
         bodySub = string.sub(bodySub, keyword.finish+1, bodySub:len())
     end return keywords
 end
 
 function mac.BuildProcs()
-    for(macro in mac.Clean) do
-        for(keyword in macro.Keywords) do
-            if(string.sub(modifiedMacro.name, 1, 3) == "PVP" and ~mac.Proc.PVP[keyword.raw]) then
+    for macro in mac.Clean do
+        for keyword in macro.Keywords do
+            if(string.sub(modifiedMacro.name, 1, 3) == "PVP" and not mac.Proc.PVP[keyword.raw]) then
                 mac.Proc.PVP[keyword.raw] = {
                     keyword = keyword,
                     targetCriteria = mac.GetTargetCriteriaByID(keyword.target)
                 }
 
-            elseif(string.sub(modifiedMacro.name, 1, 3) == "PVE" and ~mac.Proc.PVE[keyword.raw])) then
+            elseif(string.sub(modifiedMacro.name, 1, 3) == "PVE" and not mac.Proc.PVE[keyword.raw]) then
                 mac.Proc.PVE[keyword.raw] = {
                     keyword = keyword,
                     targetCriteria = mac.GetTargetCriteriaByID(keyword.target)
                 }
 
             else
-                if(~mac.Proc.PVP[keyword.raw]) then
+                if(not mac.Proc.PVP[keyword.raw]) then
                     mac.Proc.PVP[keyword.raw] = {
                         keyword = keyword,
                         targetCriteria = mac.GetTargetCriteriaByID(keyword.target)
                     }
 
-                elseif(~mac.Proc.PVE[keyword.raw]) then
+                elseif(not mac.Proc.PVE[keyword.raw]) then
                     mac.Proc.PVE[keyword.raw] = {
                         keyword = keyword,
                         targetCriteria = mac.GetTargetCriteriaByID(keyword.target)
@@ -270,7 +275,7 @@ function mac.IdentifyTargets()
     mac.MissingTargets = {}
 
     if(mac.Proc.current == "PVP") then
-        for(raw, data in pairs(mac.Proc.PVP)) do
+        for raw, data in pairs(mac.Proc.PVP) do
             local matches = ns.Core.PollGroup(data.keyword.group, data.targetCriteria)
 
             if(table.getn(matches) == 1) then
@@ -286,7 +291,7 @@ function mac.IdentifyTargets()
         end
 
     elseif(mac.Proc.current == "PVE") then
-        for(raw, data in pairs(mac.Proc.PVE)) do
+        for raw, data in pairs(mac.Proc.PVE) do
             local matches = ns.Core.PollGroup(data.keyword.group, data.targetCriteria)
 
             if(table.getn(matches) == 1) then
@@ -316,13 +321,13 @@ end
 function mac.BuildMacros()
     mac.Modified = {}
 
-	for(macro in mac.Clean) do
+	for macro in mac.Clean do
         local modifiedMacro = table.clone(macro)
 		local keywords = mac.GetKeywords(macro)
         local seenKeywords = {}
 
-        for(keyword in keywords) do
-            if(~seenKeywords[keyword]) then
+        for keyword in keywords do
+            if(not seenKeywords[keyword]) then
                 modifiedMacro.body = string.gsub(modifiedMacro.body, keyword, mac.Sub[keyword])
                 seenKeywords[keyword] = true
             end
@@ -343,7 +348,7 @@ end
 function mac.EditMacros(macros)
     mac.locked = true
 
-    for(macro in macros) do
+    for macro in macros do
         EditMacro(macro.number, macro.name, macro.icon, macro.body, macro.isLocal, 1)
     end
 

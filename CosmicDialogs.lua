@@ -1,6 +1,6 @@
 local _, ns = ...
 
-local dlg = ns.Dialogs
+local dlg = ns.UI.Dialogs
 
 function dlg.ChooseClassTarget(className, targets)
 	local classNameText = "|c"..RAID_CLASS_COLORS[string.upper(className)].colorStr..className.."|r"
