@@ -2,6 +2,14 @@ local _, ns = ...
 
 local cmd = ns.Cmd
 
+local function getCommandName(name)
+	for k, v in pairs(cmd) do
+		if(string.lower(k) == string.lower(name)) then
+			return k
+		end
+	end
+end
+
 local ParseCommand = function(line)
 	local cmd = {}
 	
@@ -11,25 +19,33 @@ local ParseCommand = function(line)
 		for str in string.gmatch(line, "([^%s]+)") do
 			table.insert(split, str)
 		end
-	
-		cmd.name = table.remove(split, 1)
+
+		cmd.name = getCommandName(table.remove(split, 1)) or "Error"
 		cmd.args = split
-	end
-	
-    return cmd
+	end return cmd
 end
 
--- For some reason the first parameter is always the self object? Don't know why
 function cmd.RunCommand(line)
 	if(line == "") then
 		cmd.Default()
 	else
-		local cmd = ParseCommand(line)
-		print(ns.Debug:TableToText(cmd))
-		cmd[cmd.name](cmd.args)
+		local cmdParse = ParseCommand(line)
+		cmd[cmdParse.name](cmdParse.args)
 	end
 end
 
 function cmd.Default()
-	print("YO")
+	print("Feature not implemented yet.")
+end
+
+function cmd.Help()
+	print("Feature not implemented yet.")
+end
+
+function cmd.Error()
+	print("Invalid command - type \"/knap help\" for a list of commands.")
+end
+
+function cmd.Test(args)
+	ns.Debug.Test(args)
 end

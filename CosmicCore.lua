@@ -5,6 +5,10 @@ local cor = ns.Core
 local waitTable = {};
 local waitFrame = nil;
 
+function cor.Yo(bool, int, str)
+    print(bool .. int .. str)
+end
+
 function KNAP_wait(delay, func, ...)
     if(type(delay)~="number" or type(func)~="function") then
         return false;

@@ -92,7 +92,7 @@ function mac.BuildProcs()
                     targetCriteria = mac.GetTargetCriteriaByID(keyword.target)
                 }
 
-            else
+            elseif(string.sub(modifiedMacro.name, 1, 3) == "PVA") then
                 if(not mac.Proc.PVP[keyword.raw]) then
                     mac.Proc.PVP[keyword.raw] = {
                         keyword = keyword,
