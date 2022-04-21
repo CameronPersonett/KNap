@@ -47,11 +47,11 @@ function mac.Filter()
 end
 
 --  return keywords:
---    keyword:
---      target - the boss/role/class/spec that the keyword refers to
---      number - the index of the target if there are more than one of the same type
---      group  - the group identifier (party/raid/opponent)
---    ...
+--      keyword:
+--          target - the enemy/role/class/spec that the keyword refers to
+--          number - the index of the target if there are more than one of the same type
+--          group  - the group identifier (party/raid/opponent)
+--      ...
 function mac.GetKeywords(macro)
     local keywords = {}
 
