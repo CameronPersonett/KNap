@@ -6,3 +6,18 @@ Keywords:
     KNAP_DR(x)(_[P/R/O]), KNAP_RG(x)(_[P/R/O]), KNAP_MK(x)(_[P/R/O]), KNAP_DH(x)(_[P/R/O])
     KNAP_HT(x)(_[P/R/O]), KNAP_SH(x)(_[P/R/O])
     KNAP_WR(x)(_[P/R/O]), KNAP_PL(x)(_[P/R/O]), KNAP_DK(x)(_[P/R/O])
+
+knap test set debug.testtable fuck lol shit table fuck 69 end piss 420
+
+Message: Interface\AddOns\KNap\CosmicDebug.lua:38: Usage: CreateFrame("frameType" [, "name"] [, parent] [, "template"] [, id])
+Time: Thu Apr 21 21:56:30 2022
+Count: 1
+Stack: Interface\AddOns\KNap\CosmicDebug.lua:38: Usage: CreateFrame("frameType" [, "name"] [, parent] [, "template"] [, id])
+[string "=[C]"]: in function `CreateFrame'
+[string "@Interface\AddOns\KNap\CosmicDebug.lua"]:38: in function `Load'
+[string "@Interface\AddOns\KNap\CosmicDebug.lua"]:426: in main chunk
+
+Locals: (*temporary) = "Frame"
+(*temporary) = "CosmicDebug_HeaderBar"
+(*temporary) = "CosmicDebug_Parent"
+(*temporary) = "BackdropTemplate"

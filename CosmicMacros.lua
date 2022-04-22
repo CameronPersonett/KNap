@@ -5,10 +5,10 @@ local mac = ns.Macros
 mac.Clean = {}
 mac.Modified = {}
 
-mac.Proc = {}
-mac.Proc.current = "NONE"
-mac.Proc.PvE = {}
-mac.Proc.PvP = {}
+mac.Procs = {}
+mac.Procs.current = "NONE"
+mac.Procs.PvP = {}
+mac.Procs.PvE = {}
 
 -- The MissingTargets table contains the raw/data key-value pairs for targets
 -- that cannot be automatically identified
@@ -37,11 +37,10 @@ end
 function mac.Filter()
     for i = table.getn(mac.Clean), 1, -1 do
         local curMacro = mac.Clean[i]
+        curMacro.keywords = mac.GetKeywords(curMacro)
 
-        curMacro.Keywords = mac.GetKeywords(curMacro)
-
-        if(table.getn(curMacro.Keywords) == 0) then
-            table.remove(mac.Clean)
+        if(table.getn(curMacro.keywords) == 0) then
+            tremove(mac.Clean, i)
         end
     end
 end
@@ -57,14 +56,14 @@ function mac.GetKeywords(macro)
 
     local bodySub = macro.body
 
-    while(bodySub.find("KNAP[_](%a+)(%d*)[_]?(P?R?O?)")) do
+    while(bodySub and bodySub:find("KNAP[_](%a+)(%d*)[_]?(P?R?O?)")) do
         local start, finish, target, number, group = nil, nil, nil, nil, nil
 
         --keyword.start, keyword.finish, keyword.contentType, keyword.target, keyword.number keyword.group = bodySub.find("KNAP[_](%a+)(%d*)[_]?(P?R?O?)")
-        start, finish, target, number, group = bodySub.find("KNAP[_](%a+)(%d*)[_]?(P?R?O?)")
+        start, finish, target, number, group = bodySub:find("KNAP[_](%a+)(%d*)[_]?(P?R?O?)")
 
         local keyword = {
-            raw = string.sub(bodySub, start, finish),
+            raw = bodySub:sub(start, finish),
             start = start,
             finish = finish,
             target = target,
@@ -72,35 +71,35 @@ function mac.GetKeywords(macro)
             group = group
         }
 
-        table.insert(keywords, keyword)
-        bodySub = string.sub(bodySub, keyword.finish+1, bodySub:len())
+        tinsert(keywords, keyword)
+        bodySub = bodySub:sub(keyword.finish+1, bodySub:len())
     end return keywords
 end
 
 function mac.BuildProcs()
-    for macro in mac.Clean do
-        for keyword in macro.Keywords do
-            if(string.sub(modifiedMacro.name, 1, 3) == "PVP" and not mac.Proc.PVP[keyword.raw]) then
-                mac.Proc.PVP[keyword.raw] = {
+    for _, macro in pairs(mac.Clean) do
+        for _, keyword in pairs(macro.keywords) do
+            if(string.lower(macro.name:sub(1, 3)) == "pvp" and not mac.Procs.PvP[keyword.raw]) then
+                mac.Procs.PvP[keyword.raw] = {
                     keyword = keyword,
                     targetCriteria = mac.GetTargetCriteriaByID(keyword.target)
                 }
 
-            elseif(string.sub(modifiedMacro.name, 1, 3) == "PVE" and not mac.Proc.PVE[keyword.raw]) then
-                mac.Proc.PVE[keyword.raw] = {
+            elseif(string.lower(macro.name:sub(1, 3)) == "pve" and not mac.Procs.PvE[keyword.raw]) then
+                mac.Procs.PvE[keyword.raw] = {
                     keyword = keyword,
                     targetCriteria = mac.GetTargetCriteriaByID(keyword.target)
                 }
 
-            elseif(string.sub(modifiedMacro.name, 1, 3) == "PVA") then
-                if(not mac.Proc.PVP[keyword.raw]) then
-                    mac.Proc.PVP[keyword.raw] = {
+            else
+                if(not mac.Procs.PvP[keyword.raw]) then
+                    mac.Procs.PvP[keyword.raw] = {
                         keyword = keyword,
                         targetCriteria = mac.GetTargetCriteriaByID(keyword.target)
                     }
 
-                elseif(not mac.Proc.PVE[keyword.raw]) then
-                    mac.Proc.PVE[keyword.raw] = {
+                elseif(not mac.Procs.PvE[keyword.raw]) then
+                    mac.Procs.PvE[keyword.raw] = {
                         keyword = keyword,
                         targetCriteria = mac.GetTargetCriteriaByID(keyword.target)
                     }
@@ -274,8 +273,8 @@ end
 function mac.IdentifyTargets()
     mac.MissingTargets = {}
 
-    if(mac.Proc.current == "PVP") then
-        for raw, data in pairs(mac.Proc.PVP) do
+    if(mac.Procs.current == "PVP") then
+        for raw, data in pairs(mac.Procs.PvP) do
             local matches = ns.Core.PollGroup(data.keyword.group, data.targetCriteria)
 
             if(table.getn(matches) == 1) then
@@ -290,8 +289,8 @@ function mac.IdentifyTargets()
             end
         end
 
-    elseif(mac.Proc.current == "PVE") then
-        for raw, data in pairs(mac.Proc.PVE) do
+    elseif(mac.Procs.current == "PVE") then
+        for raw, data in pairs(mac.Procs.PvE) do
             local matches = ns.Core.PollGroup(data.keyword.group, data.targetCriteria)
 
             if(table.getn(matches) == 1) then
