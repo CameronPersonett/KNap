@@ -1,5 +1,5 @@
 ## Interface: 90200
-## Title: |cff93E9BECosmic Kidd Nappers
+## Title: |cff93E9BEKNap|
 ## Version: 0.1
 ## Author: Cameron Personett
 ## SavedVariables: CKNdb

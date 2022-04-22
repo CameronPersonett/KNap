@@ -2,7 +2,7 @@ local _, ns = ...
 
 local dbg = ns.Debug
 
--- *** The enclosed code is for eventually making this module a standalone addon
+-- *** The enclosed code is for eventually making this module a standalone addon.
 function dbg.Register(addonName, nsTable)
 	if(dbg[addonName]) then
 		message("CosmicDebug already has an addon registered with the name \"" .. addonName .. "\".")
@@ -12,12 +12,13 @@ function dbg.Register(addonName, nsTable)
 	end
 end
 
-_G["COSMIC_DEBUG"] = dbg 
+_G["COSMIC_DEBUG"] = dbg
+-- ***
 
 function dbg.Load()
 	local f = CreateFrame("Frame", "CosmicDebug_Parent", UIParent, "BackdropTemplate")
 	f:SetPoint("CENTER")
-	f:SetSize(600, 500)
+	f:SetSize(800, 700)
 	f:SetFrameStrata("TOOLTIP")
     f:SetBackdrop({
 		bgFile = "Interface\\Addons\\KNap\\KRes\\Parent-Frame-BG",
@@ -36,15 +37,39 @@ function dbg.Load()
 	f:Show()
 
 	f = CreateFrame("Frame", "CosmicDebug_HeaderBar", CosmicDebug_Parent, "BackdropTemplate")
-	f:SetSize(600, 74)
+	f:SetPoint("TOP")
+	f:SetSize(CosmicDebug_Parent:GetWidth(), 74)
     f:SetBackdrop({
 		bgFile = "Interface\\Addons\\KNap\\KRes\\Parent-Frame-BG",
         insets = { left = 14, right = 14, top = 16, bottom = 0 }
 	}) f:SetBackdropColor(0.576, 0.914, 0.745, 0.5)
-	f:SetPoint("TOP")
+    
+    local headerText = CosmicDebug_HeaderBar:CreateFontString()
+	headerText:SetPoint("CENTER")
+	headerText:SetPoint("TOP", 0, -12)
+	headerText:SetSize(200, 64)
+	headerText:SetFont("Fonts\\ARIALN.ttf", 32, "MONOCHROME")
+	headerText:SetText("Cosmic Debug")
 	f:Show()
-
-    f.text = f:CreateFontString(nil, "")
+	
+	-- f = CreateFrame("Frame", "CosmicDebug_HeaderTitle", CosmicDebug_HeaderBar, "BackdropTemplate")
+	-- f:SetPoint("TOP", 0, -5)
+	-- f:SetPoint("CENTER")
+	-- f:SetSize(200, 64)
+	-- f:SetBackdrop({
+	-- 	bgFile = "Interface\\Addons\\KNap\\KRes\\Parent-Frame-BG",
+    --     insets = { left = 14, right = 14, top = 16, bottom = 0 }
+	-- }) f:SetBackdropColor(0.576, 0.914, 0.745, 0.5)
+    -- f.text = f:CreateFontString()
+	-- f.text:SetDrawLayer("OVERLAY", 2)
+	-- f.text:SetFontObject("GameFontWhite")
+	-- f.text:SetTextColor(1, 1, 1)
+	-- f.text:SetText("Cosmic Debug")
+	-- f:Show()
+	
+	-- f = CreateFrame("MessageFrame", "X", Y, "Z")
+	--f:SetFont("Fonts\\MORPHEUS.ttf", 30, "OUTLINE")
+	--f:AddMessage("Cosmic Debug", 1, 1, 1)
 end 
 -- ***
 
