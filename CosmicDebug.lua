@@ -13,7 +13,6 @@ function dbg.Register(addonName, nsTable)
 end
 
 _G["COSMIC_DEBUG"] = dbg
--- ***
 
 function dbg.Load()
 	local f = CreateFrame("Frame", "CosmicDebug_Parent", UIParent, "BackdropTemplate")
