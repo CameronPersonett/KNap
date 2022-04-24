@@ -15,43 +15,245 @@ end
 _G["COSMIC_DEBUG"] = dbg
 
 function dbg.Load()
-	local f = CreateFrame("Frame", "CosmicDebug_Parent", UIParent, "BackdropTemplate")
-	f:SetPoint("CENTER")
-	f:SetSize(800, 700)
-	f:SetFrameStrata("TOOLTIP")
-    f:SetBackdrop({
-		bgFile = "Interface\\Addons\\KNap\\KRes\\Parent-Frame-BG",
-		-- Change this to a better looking edge file (square corners)
-		edgeFile = "Interface\\PVPFrame\\UI-Character-PVP-Highlight",
-        edgeSize = 32,
-        insets = { left = 14, right = 14, top = 16, bottom = 16 }
-	}) f:SetBackdropColor(0, 0, 0, 1.0)
-	f:SetBackdropBorderColor(0.576, 0.914, 0.745, 1.0)
-    f:SetMovable(true)
-    f:SetClampedToScreen(true)
-    f:SetScript("OnMouseDown", function(self, button)
-        if(button == "LeftButton") then self:StartMoving() end
-	end)
-	f:SetScript("OnMouseUp", f.StopMovingOrSizing)
-	f:Show()
-
-	f = CreateFrame("Frame", "CosmicDebug_HeaderBar", CosmicDebug_Parent, "BackdropTemplate")
-	f:SetPoint("TOP")
-	f:SetSize(CosmicDebug_Parent:GetWidth(), 74)
-    f:SetBackdrop({
-		bgFile = "Interface\\Addons\\KNap\\KRes\\Parent-Frame-BG",
-        insets = { left = 14, right = 14, top = 16, bottom = 0 }
-	}) f:SetBackdropColor(0.576, 0.914, 0.745, 0.5)
-    
-    local headerText = CosmicDebug_HeaderBar:CreateFontString()
-	headerText:SetPoint("CENTER")
-	headerText:SetPoint("TOP", 0, -12)
-	headerText:SetSize(200, 64)
-	headerText:SetFont("Fonts\\ARIALN.ttf", 32, "MONOCHROME")
-	headerText:SetText("Cosmic Debug")
-	f:Show()
+	-- We'll use this variable to create all of the frames for our UI
+	local f = nil
 	
-	-- f = CreateFrame("Frame", "CosmicDebug_HeaderTitle", CosmicDebug_HeaderBar, "BackdropTemplate")
+	-- CosmicDebug_Parent
+	if(true) then
+		f = CreateFrame("Frame", "CosmicDebug_Parent", UIParent, "BackdropTemplate")
+		f:SetPoint("CENTER")
+		f:SetSize(800, 843)
+		f:SetFrameStrata("TOOLTIP")
+		f:SetBackdrop({
+			bgFile = "Interface\\Addons\\KNap\\KRes\\Parent-Frame-BG",
+			-- Change this to a better looking edge file (square corners)
+			edgeFile = "Interface\\PVPFrame\\UI-Character-PVP-Highlight",
+			edgeSize = 32,
+			insets = { left = 14, right = 14, top = 16, bottom = 16 }
+		}) f:SetBackdropColor(0, 0, 0, 1.0)
+		f:SetBackdropBorderColor(0.576, 0.914, 0.745, 1.0)
+		f:SetMovable(true)
+		f:SetClampedToScreen(true)
+		f:SetScript("OnMouseDown", function(self, button)
+			if(button == "LeftButton") then self:StartMoving() end
+		end)
+		f:SetScript("OnMouseUp", f.StopMovingOrSizing)
+		f:Show()
+	end
+
+	-- CosmicDebug_TitleBar
+	if(true) then
+		f = CreateFrame("Frame", "CosmicDebug_TitleBar", CosmicDebug_Parent, "BackdropTemplate")
+		f:SetPoint("TOP")
+		f:SetSize(CosmicDebug_Parent:GetWidth(), 74)
+		f:SetBackdrop({
+			bgFile = "Interface\\Addons\\KNap\\KRes\\Parent-Frame-BG",
+			edgeFile = "Interface\\PVPFrame\\UI-Character-PVP-Highlight",
+			edgeSize = 32,
+			insets = { left = 14, right = 14, top = 16, bottom = 16 }
+			--insets = { left = 14, right = 14, top = 16, bottom = 0 }
+		}) f:SetBackdropColor(0.576, 0.914, 0.745, 0.75)
+		f:SetBackdropBorderColor(0.576, 0.914, 0.745, 1.0)
+		
+		local headerText = CosmicDebug_TitleBar:CreateFontString()
+		headerText:SetPoint("CENTER")
+		headerText:SetPoint("TOP", 0, -4)
+		headerText:SetSize(200, 64)
+		headerText:SetFont("Fonts\\ARIALN.ttf", 32, "MONOCHROME")
+		headerText:SetText("Cosmic Debug")
+		f:Show()
+	end
+
+	-- CosmicDebug_HeaderBar
+	if(true) then
+		f = CreateFrame("Frame", "CosmicDebug_HeaderBar", CosmicDebug_Parent, "BackdropTemplate")
+		f:SetPoint("TOP", 0, -45)
+		f:SetSize(CosmicDebug_Parent:GetWidth(), 66)
+		f:SetBackdrop({
+			bgFile = "Interface\\Addons\\KNap\\KRes\\Parent-Frame-BG",
+			edgeFile = "Interface\\PVPFrame\\UI-Character-PVP-Highlight",
+			edgeSize = 32,
+			insets = { left = 14, right = 14, top = 16, bottom = 16 }
+			--insets = { left = 14, right = 14, top = 16, bottom = 0 }
+		}) f:SetBackdropColor(0.576, 0.914, 0.745, 0.50)
+		f:SetBackdropBorderColor(0.576, 0.914, 0.745, 1.0)
+		f:Show()
+	end
+
+	-- CosmicDebug_HeaderBar_HomeButton
+	if(true) then
+		f = CreateFrame("Button", "CosmicDebug_HeaderBar_SearchButton", CosmicDebug_HeaderBar)
+		f:SetPoint("LEFT", 16, 0)
+		f:SetSize(32, 32)
+		f:SetNormalTexture("Interface\\Addons\\KNap\\KRes\\Home")
+		-- TODO: SET SCRIPT FOR HOME
+		f:Show()
+	end
+
+	-- CosmicDebug_HeaderBar_UpButton
+	if(true) then
+		f = CreateFrame("Button", "CosmicDebug_HeaderBar_UpButton", CosmicDebug_HeaderBar)
+		f:SetPoint("LEFT", 51, 0)
+		f:SetSize(32, 32)
+		f:SetNormalTexture("Interface\\Addons\\KNap\\KRes\\Arrow-Up-Disabled")
+		-- TODO: SET SCRIPT FOR UP
+		f:Show()
+	end
+
+	-- CosmicDebug_HeaderBar_BackButton
+	if(true) then
+		f = CreateFrame("Button", "CosmicDebug_HeaderBar_BackButton", CosmicDebug_HeaderBar)
+		f:SetPoint("LEFT", 85, 0)
+		f:SetSize(32, 32)
+		f:SetNormalTexture("Interface\\Addons\\KNap\\KRes\\Arrow-Left-Disabled")
+		-- TODO: SET SCRIPT FOR BACK
+		f:Show()
+	end
+
+	-- CosmicDebug_HeaderBar_ForwardButton
+	if(true) then
+		f = CreateFrame("Button", "CosmicDebug_HeaderBar_ForwardButton", CosmicDebug_HeaderBar)
+		f:SetPoint("LEFT", 119, 0)
+		f:SetSize(32, 32)
+		f:SetNormalTexture("Interface\\Addons\\KNap\\KRes\\Arrow-Right-Disabled")
+		-- TODO: SET SCRIPT FOR FORWARD
+		f:Show()
+	end
+
+	-- CosmicDebug_HeaderBar_CloseButton
+	if(true) then
+		f = CreateFrame("Button", "CosmicDebug_HeaderBar_CloseButton", CosmicDebug_HeaderBar)
+		f:SetPoint("RIGHT", -16, 0)
+		f:SetSize(32, 32)
+		f:SetNormalTexture("Interface\\Addons\\KNap\\KRes\\Close")
+		-- TODO: SET SCRIPT FOR CLOSE
+		f:Show()
+	end
+
+	-- CosmicDebug_HeaderBar_MinimizeButton
+	if(true) then
+		f = CreateFrame("Button", "CosmicDebug_HeaderBar_MinimizeButton", CosmicDebug_HeaderBar)
+		f:SetPoint("RIGHT", -50, 0)
+		f:SetSize(32, 32)
+		f:SetNormalTexture("Interface\\Addons\\KNap\\KRes\\Minimize")
+		-- TODO: SET SCRIPT FOR MINIMIZE
+		f:Show()
+	end
+
+	-- CosmicDebug_HeaderBar_ConfigButton
+	if(true) then
+		f = CreateFrame("Button", "CosmicDebug_HeaderBar_ConfigButton", CosmicDebug_HeaderBar)
+		f:SetPoint("RIGHT", -84, 0)
+		f:SetSize(32, 32)
+		f:SetNormalTexture("Interface\\Addons\\KNap\\KRes\\Config")
+		-- TODO: SET SCRIPT FOR CONFIG
+		f:Show()
+	end
+
+	-- CosmicDebug_HeaderBar_RefreshButton
+	if(true) then
+		f = CreateFrame("Button", "CosmicDebug_HeaderBar_RefreshButton", CosmicDebug_HeaderBar)
+		f:SetPoint("RIGHT", -118, 0)
+		f:SetSize(32, 32)
+		f:SetNormalTexture("Interface\\Addons\\KNap\\KRes\\Refresh")
+		-- TODO: SET SCRIPT FOR REFRESH
+		f:Show()
+	end
+
+	-- CosmicDebug_UrlFrame
+	if(true) then
+		f = CreateFrame("Frame", "CosmicDebug_UrlFrame", CosmicDebug_Parent, "BackdropTemplate")
+		f:SetPoint("TOPLEFT", 0, -81)
+		f:SetSize(CosmicDebug_Parent:GetWidth(), CosmicDebug_HeaderBar:GetHeight() - 5)
+		f:SetBackdrop({
+			bgFile = "Interface\\Addons\\KNap\\KRes\\Parent-Frame-BG",
+			edgeFile = "Interface\\PVPFrame\\UI-Character-PVP-Highlight",
+			edgeSize = 32,
+			insets = { left = 14, right = 14, top = 16, bottom = 16 }
+			--insets = { left = 14, right = 14, top = 16, bottom = 0 }
+		}) f:SetBackdropColor(0.576, 0.914, 0.745, 0.25)
+		f:SetBackdropBorderColor(0.576, 0.914, 0.745, 1.0)
+		
+		local urlText = CosmicDebug_UrlFrame:CreateFontString("CosmicDebug_HeaderBar_UrlText")
+		urlText:SetPoint("LEFT", 24, 0)
+		urlText:SetFont("Fonts\\ARIALN.ttf", 20, "MONOCHROME")
+		urlText:SetText("root")
+		f:Show()
+	end
+
+	-- CosmicDebug_FieldsFrame
+	if(true) then
+		f = CreateFrame("Frame", "CosmicDebug_FieldsFrame", CosmicDebug_Parent, "BackdropTemplate")
+		f:SetPoint("TOP", 0, -45 - 66)
+		f:SetSize(CosmicDebug_Parent:GetWidth(), 732)
+		f:SetBackdrop({
+			--bgFile = "Interface\\Addons\\KNap\\KRes\\Parent-Frame-BG",
+			insets = { left = 14, right = 14, top = 16, bottom = 16 }
+		}) --f:SetBackdropColor(0.576, 0.914, 0.745, 0.50)
+		f:Show()
+	end
+
+	-- CosmicDebug_FieldsFrame_FieldFrame(1-16)
+	if(true) then
+		local varSize = 0
+
+		for i = 1, 20 do
+			f = CreateFrame("Frame", "CosmicDebug_FieldsFrame_FieldFrame" .. i, CosmicDebug_FieldsFrame, "BackdropTemplate")
+			f:SetPoint("TOP", 0, -1 + (-35 * (i - 1)))
+
+			if(mod(i, 2) == 1) then
+				varSize = 67
+
+			else
+				varSize = 68
+			end
+
+			f:SetSize(CosmicDebug_Parent:GetWidth(), varSize)
+			f:SetBackdrop({
+				bgFile = "Interface\\Addons\\KNap\\KRes\\Parent-Frame-BG",
+				insets = { left = 14, right = 14, top = 16, bottom = 16 }
+			})
+			
+			if(mod(i, 2) == 1) then
+				f:SetBackdropColor(1, 1, 1, 0.25)
+
+			else
+				f:SetBackdropColor(1, 1, 1, 0.125)
+			end
+		end
+	end
+
+	-- CosmicDebug_FieldsFrame_FieldFrame(1-16)_TypeIcon
+	if(true) then
+		local varSize = 0
+
+		for i = 1, 20 do
+			f = CreateFrame("Frame", "TypeIcon" .. i, _G["CosmicDebug_FieldsFrame_FieldFrame" .. i])
+			f:SetPoint("LEFT", 16, 0)
+			f:SetSize(31, 31)
+
+			local iconTexture = f:CreateTexture("TypeIcon" .. i .. "_Texture")
+			iconTexture:SetAllPoints(f)
+			iconTexture:SetTexture("Interface\\Addons\\KNap\\KRes\\Nil")
+			f:Show()
+		end
+	end
+
+	-- CosmicDebug_FieldsFrame_FieldFrame(1-16)_ActionButton
+	if(true) then
+		local varSize = 0
+
+		for i = 1, 20 do
+			f = CreateFrame("Button", "ActionButton" .. i, _G["CosmicDebug_FieldsFrame_FieldFrame" .. i])
+			f:SetPoint("RIGHT", -16, 0)
+			f:SetSize(31, 31)
+			f:SetNormalTexture("Interface\\Addons\\KNap\\KRes\\Caret-Right")
+			f:Show()
+		end
+	end
+	
+	
+	-- f = CreateFrame("Frame", "CosmicDebug_HeaderTitle", CosmicDebug_TitleBar, "BackdropTemplate")
 	-- f:SetPoint("TOP", 0, -5)
 	-- f:SetPoint("CENTER")
 	-- f:SetSize(200, 64)
