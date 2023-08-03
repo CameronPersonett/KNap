@@ -60,7 +60,7 @@ function mac.GetKeywords(macro)
         local start, finish, target, number, group = nil, nil, nil, nil, nil
 
         --keyword.start, keyword.finish, keyword.contentType, keyword.target, keyword.number keyword.group = bodySub.find("KNAP[_](%a+)(%d*)[_]?(P?R?O?)")
-        start, finish, target, number, group = bodySub:find("KNAP[_](%a+)(%d*)[_]?(P?R?O?)")
+        start, finish, target, number, group = bodySub:find("KNAP[_](%a+)(%d*)[_]?(P?R?A?)")
 
         local keyword = {
             raw = bodySub:sub(start, finish),
