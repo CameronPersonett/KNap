@@ -1,12 +1,13 @@
-Keywords:
-    KNAP_TNK(x)(_[P/R/A]), KNAP_HLR(x)(_[P/R/A]), KNAP_DPS(x)(_[P/R/A])
-    KNAP_BSS(x)
-    KNAP_KT, KNAP_FT, KNAP_OT(x)
-    KNAP_PR(x)(_[P/R/A]), KNAP_MG(x)(_[P/R/A]), KNAP_WL(x)(_[P/R/A])
-    KNAP_DR(x)(_[P/R/A]), KNAP_RG(x)(_[P/R/A]), KNAP_MK(x)(_[P/R/A]), KNAP_DH(x)(_[P/R/A])
-    KNAP_HT(x)(_[P/R/A]), KNAP_SH(x)(_[P/R/A]), KNAP_EV(x)(_[P/R/A])
-    KNAP_WR(x)(_[P/R/A]), KNAP_PL(x)(_[P/R/A]), KNAP_DK(x)(_[P/R/A])
+Syntax:
+    CK_TNK(x)(_[P/R/A]), CK_HLR(x)(_[P/R/A]), CK_DPS(x)(_[P/R/A])
+    CK_BSS(x)
+    CK_KT, CK_FT, CK_OT(x)
+    CK_PR(x)(_[P/R/A]), CK_MG(x)(_[P/R/A]), CK_WL(x)(_[P/R/A])
+    CK_DR(x)(_[P/R/A]), CK_RG(x)(_[P/R/A]), CK_MK(x)(_[P/R/A]), CK_DH(x)(_[P/R/A])
+    CK_HT(x)(_[P/R/A]), CK_SH(x)(_[P/R/A]), CK_EV(x)(_[P/R/A])
+    CK_WR(x)(_[P/R/A]), CK_PL(x)(_[P/R/A]), CK_DK(x)(_[P/R/A])
 
+Key:
     P - Party; R - Raid; A - Arena
 
     TNK - Tank; HLR - Healer; DPS - Damage
@@ -17,6 +18,11 @@ Keywords:
     DR - Druid; RG - Rogue; MK - Monk; DH - Demon hunter
     HT - Hunter; SH - Shaman; EV - Evoker
     WR - Warrior; PL - Paladin; DK - Death knight
+
+Example:
+    CK_HLR2_R - The second bound healer in the raid group
+    CK_FT - The bound focus target in the arena group
+    CK_DPS3_P - The third bound DPS in the party
 
 Locals:
     (*temporary) = "Frame"
