@@ -4,8 +4,19 @@ Keywords:
     KNAP_KT, KNAP_FT, KNAP_OT(x)
     KNAP_PR(x)(_[P/R/A]), KNAP_MG(x)(_[P/R/A]), KNAP_WL(x)(_[P/R/A])
     KNAP_DR(x)(_[P/R/A]), KNAP_RG(x)(_[P/R/A]), KNAP_MK(x)(_[P/R/A]), KNAP_DH(x)(_[P/R/A])
-    KNAP_HT(x)(_[P/R/A]), KNAP_SH(x)(_[P/R/A])
+    KNAP_HT(x)(_[P/R/A]), KNAP_SH(x)(_[P/R/A]), KNAP_EV(x)(_[P/R/A])
     KNAP_WR(x)(_[P/R/A]), KNAP_PL(x)(_[P/R/A]), KNAP_DK(x)(_[P/R/A])
+
+    P - Party; R - Raid; A - Arena
+
+    TNK - Tank; HLR - Healer; DPS - Damage
+    BSS - Boss
+    KT - Kill target; FT - Focus target; OT - Off-target
+
+    PR - Priest; MG - Mage; WL - Warlock
+    DR - Druid; RG - Rogue; MK - Monk; DH - Demon hunter
+    HT - Hunter; SH - Shaman; EV - Evoker
+    WR - Warrior; PL - Paladin; DK - Death knight
 
 Locals:
     (*temporary) = "Frame"
